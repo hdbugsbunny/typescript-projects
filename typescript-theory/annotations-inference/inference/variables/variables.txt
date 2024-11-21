@@ -1,0 +1,13 @@
+Definition :- Typescript tries to figure out what type of value a variable refers to i.e., typescript guesses the type
+
+Eg., const color = "red";
+variable declaration :- const color
+variable initialization :- "red"
+If declaration and initialization are on the same line, Typescript will figure out what type of value a variable refers to
+
+When to use? Always!!!
+
+any Type :-
+1. A type, just as 'string' or 'boolean' are
+2. Means TS has no idea what this is - can't check for correct property references
+3. Avoid variables with 'any' at all costs

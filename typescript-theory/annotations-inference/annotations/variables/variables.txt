@@ -1,0 +1,6 @@
+Definition :- Code we add to tell typescript what type of value a variable will refer to i.e., we (developers) tell typescript the type
+
+When to use?
+1. When we declare a variable on one line the initialize it later
+2. When we want a variable to have a type that can't be inferred
+3. When a function returns the 'any' type and we need to clarify the value
