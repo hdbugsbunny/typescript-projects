@@ -1,0 +1,5 @@
+Definition :- Creates a new type, describing the property names and value types of an object.
+
+General Strategy for Reusable Code in TS :-
+1. Create functions that accept arguments that are typed with interfaces
+2. Objects/Classes can decide to 'implement' a given interface to work with a function
