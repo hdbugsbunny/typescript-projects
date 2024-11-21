@@ -1,8 +1,15 @@
-import { Company } from "./Company";
-import { User } from "./User";
+// import { Company } from "./Company";
+// import { User } from "./User";
 
-const user = new User();
-console.log("🚀 ~ user:", user);
+async function initMap(): Promise<void> {
+  const { Map } = (await google.maps.importLibrary(
+    "maps"
+  )) as google.maps.MapsLibrary;
+  const map = new Map(document.getElementById("map") as HTMLElement, {
+    center: { lat: 0, lng: 0 },
+    zoom: 1,
+  });
+  console.log("🚀 ~ map:", map);
+}
 
-const company = new Company();
-console.log("🚀 ~ company:", company);
+initMap();
