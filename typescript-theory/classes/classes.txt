@@ -1,0 +1,6 @@
+Definition :- Blueprint to create an object with some fields (values) and methods (functions) to represent a 'thing'.
+
+Classes Modifiers :-
+1. public - this method can be called any where, any time
+2. private - this method can only be called by other methods in 'this' class
+3. protected - this method can only be called by other methods in 'this' class, or by other methods in child classes
