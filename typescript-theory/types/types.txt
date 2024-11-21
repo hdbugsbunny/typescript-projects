@@ -1,0 +1,19 @@
+Definition :- Easy way to refer to different properties & functions that a value has
+
+Different Types :-
+1. string e.g. "hi there", "" or "today is monday"
+2. number e.g. .000025, -20 or 40000000
+3. boolean e.g. true, false
+4. Date e.g. new Date()
+5. Custom e.g. { id:1, completed:true, title:"Trash }
+
+Categories Types :-
+1. Primitive Types :- number, boolean, void, undefined, string, symbol, null
+2. Object Types :- functions, arrays, classes, objects
+
+Why we care about types?
+1. Types are used by the Typescript Compiler to analyze our code for errors
+2. Types allow other engineers to understand what values are flowing around our codebase
+
+Where we use types?
+EVERYWHERE
