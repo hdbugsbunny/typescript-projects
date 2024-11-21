@@ -1,0 +1,6 @@
+Definition :- Array-like structure where each element represents some property of a record.
+
+Eg., Object representing a 'drink'
+color ---------> brown
+carbonated ----> true
+sugar ---------> 40
