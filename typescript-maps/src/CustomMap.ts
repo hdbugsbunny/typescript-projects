@@ -1,3 +1,6 @@
+import { Company } from "./Company";
+import { User } from "./User";
+
 export class CustomMap {
   private googleMap: google.maps.Map;
 
@@ -14,4 +17,17 @@ export class CustomMap {
       zoom: 1,
     });
   }
+
+  async addUserMarker(user: User): Promise<void> {
+    const { Marker } = (await google.maps.importLibrary("marker")) as {
+      Marker: typeof google.maps.Marker;
+    };
+    new Marker({
+      map: this.googleMap,
+      position: { lat: user.location.lat, lng: user.location.lng },
+      title: user.name,
+    });
+  }
+
+  addCompanyMarker(company: Company): void {}
 }
