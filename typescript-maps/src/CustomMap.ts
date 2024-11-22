@@ -18,16 +18,24 @@ export class CustomMap {
     });
   }
 
-  async addUserMarker(user: User): Promise<void> {
+  async addMarker(mappable: User | Company): Promise<void> {
     const { Marker } = (await google.maps.importLibrary("marker")) as {
       Marker: typeof google.maps.Marker;
     };
     new Marker({
       map: this.googleMap,
-      position: { lat: user.location.lat, lng: user.location.lng },
-      title: user.name,
+      position: { lat: mappable.location.lat, lng: mappable.location.lng },
     });
   }
 
-  addCompanyMarker(company: Company): void {}
+  //   async addCompanyMarker(company: Company): Promise<void> {
+  //     const { Marker } = (await google.maps.importLibrary("marker")) as {
+  //       Marker: typeof google.maps.Marker;
+  //     };
+  //     new Marker({
+  //       map: this.googleMap,
+  //       position: { lat: company.location.lat, lng: company.location.lng },
+  //       title: company.companyName,
+  //     });
+  //   }
 }
