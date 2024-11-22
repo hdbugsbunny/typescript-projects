@@ -4,6 +4,7 @@ interface MAPPABLE {
     lat: number;
     lng: number;
   };
+  markerContent(): string;
 }
 
 export class CustomMap {
@@ -27,9 +28,20 @@ export class CustomMap {
     const { Marker } = (await google.maps.importLibrary("marker")) as {
       Marker: typeof google.maps.Marker;
     };
-    new Marker({
+
+    const marker = new Marker({
       map: this.googleMap,
       position: { lat: mappable.location.lat, lng: mappable.location.lng },
+    });
+
+    marker.addListener("click", async () => {
+      const { InfoWindow } = (await google.maps.importLibrary("maps")) as {
+        InfoWindow: typeof google.maps.InfoWindow;
+      };
+      const infoWindow = new InfoWindow({
+        content: mappable.markerContent(),
+      });
+      infoWindow.open(this.googleMap, marker);
     });
   }
 }
