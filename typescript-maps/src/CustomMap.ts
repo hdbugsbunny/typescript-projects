@@ -1,5 +1,10 @@
-import { Company } from "./Company";
-import { User } from "./User";
+//* Instructions to Every Other Class on How They Can be an Argument to 'addMarker'
+interface MAPPABLE {
+  location: {
+    lat: number;
+    lng: number;
+  };
+}
 
 export class CustomMap {
   private googleMap: google.maps.Map;
@@ -18,7 +23,7 @@ export class CustomMap {
     });
   }
 
-  async addMarker(mappable: User | Company): Promise<void> {
+  async addMarker(mappable: MAPPABLE): Promise<void> {
     const { Marker } = (await google.maps.importLibrary("marker")) as {
       Marker: typeof google.maps.Marker;
     };
@@ -27,15 +32,4 @@ export class CustomMap {
       position: { lat: mappable.location.lat, lng: mappable.location.lng },
     });
   }
-
-  //   async addCompanyMarker(company: Company): Promise<void> {
-  //     const { Marker } = (await google.maps.importLibrary("marker")) as {
-  //       Marker: typeof google.maps.Marker;
-  //     };
-  //     new Marker({
-  //       map: this.googleMap,
-  //       position: { lat: company.location.lat, lng: company.location.lng },
-  //       title: company.companyName,
-  //     });
-  //   }
 }
