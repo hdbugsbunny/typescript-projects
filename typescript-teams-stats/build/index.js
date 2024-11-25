@@ -7,6 +7,14 @@ const fs_1 = __importDefault(require("fs"));
 const matches = fs_1.default
     .readFileSync("football.csv", { encoding: "utf-8" })
     .split("\n")
-    .slice(1)
     .map((row) => row.split(","));
-console.log("🚀 ~ matches:", matches);
+let manUnitedWins = 0;
+for (let match of matches) {
+    if (match[1] === "Man United" && match[5] === "H") {
+        manUnitedWins++;
+    }
+    else if (match[2] === "Man United" && match[5] === "A") {
+        manUnitedWins++;
+    }
+}
+console.log(`Manchester United won ${manUnitedWins} games.`);
