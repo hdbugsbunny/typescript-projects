@@ -4,7 +4,6 @@ const CsvFileReader_1 = require("./CsvFileReader");
 const MatchResult_1 = require("./MatchResult");
 const matches = new CsvFileReader_1.CsvFileReader("football.csv");
 matches.read();
-console.log("🚀 ~ matches:", matches.data);
 let manUnitedWins = 0;
 for (let match of matches.data) {
     if (match[1] === "Man United" && match[5] === MatchResult_1.MatchResult.HomeWin) {
