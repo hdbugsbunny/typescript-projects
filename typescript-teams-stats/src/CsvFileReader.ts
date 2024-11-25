@@ -1,14 +1,11 @@
 import fs from "fs";
-import { MatchResult } from "./MatchResult";
 
-type MATCHDATA = [Date, string, string, number, number, MatchResult, string];
-
-export abstract class CsvFileReader {
-  data: MATCHDATA[] = [];
+export abstract class CsvFileReader<T> {
+  data: T[] = [];
 
   constructor(public filename: string) {}
 
-  abstract mapRow(row: string[]): MATCHDATA;
+  abstract mapRow(row: string[]): T;
 
   read(): void {
     this.data = fs
