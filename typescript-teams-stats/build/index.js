@@ -1,21 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const CsvFileReader_1 = require("./CsvFileReader");
+const MatchResult_1 = require("./MatchResult");
 const matches = new CsvFileReader_1.CsvFileReader("football.csv");
 matches.read();
-//* ENUM - Enumeration
-var MatchResult;
-(function (MatchResult) {
-    MatchResult["HomeWin"] = "H";
-    MatchResult["AwayWin"] = "A";
-    MatchResult["Draw"] = "D";
-})(MatchResult || (MatchResult = {}));
+console.log("🚀 ~ matches:", matches.data);
 let manUnitedWins = 0;
 for (let match of matches.data) {
-    if (match[1] === "Man United" && match[5] === MatchResult.HomeWin) {
+    if (match[1] === "Man United" && match[5] === MatchResult_1.MatchResult.HomeWin) {
         manUnitedWins++;
     }
-    else if (match[2] === "Man United" && match[5] === MatchResult.AwayWin) {
+    else if (match[2] === "Man United" && match[5] === MatchResult_1.MatchResult.AwayWin) {
         manUnitedWins++;
     }
 }
