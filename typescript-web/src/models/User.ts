@@ -1,13 +1,13 @@
+import { Eventing } from "./Eventing";
+
 interface USERPROPS {
   id?: number;
   name?: string;
   age?: number;
 }
 
-type CALLBACK = () => void;
-
 export class User {
-  events: { [key: string]: CALLBACK[] } = {};
+  public events: Eventing = new Eventing();
 
   constructor(private data: USERPROPS) {}
 
@@ -17,22 +17,6 @@ export class User {
 
   set(update: USERPROPS): void {
     Object.assign(this.data, update);
-  }
-
-  on(eventName: string, callback: CALLBACK): void {
-    if (!this.events[eventName]) {
-      this.events[eventName] = [];
-    }
-
-    this.events[eventName].push(callback);
-  }
-
-  trigger(eventName: string): void {
-    if (!this.events[eventName] || !this.events[eventName].length) {
-      return;
-    }
-
-    this.events[eventName].forEach((callback) => callback());
   }
 
   fetchData(): void {
@@ -70,6 +54,7 @@ export class User {
             }`
           );
         }
+
         return response.json();
       })
       .then((data: USERPROPS): void => this.set(data))
