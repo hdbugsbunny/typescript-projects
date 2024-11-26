@@ -1,9 +1,7 @@
-// fetch("http://localhost:3000/users", {
-//   method: "POST",
-//   body: JSON.stringify({ name: "Harshit", age: 27 }),
-//   headers: {
-//     "Content-Type": "application/json",
-//   },
-// });
+import { User } from "./models/User";
 
-fetch("http://localhost:3000/users/1");
+const user = new User({ id: 1 });
+user.fetchData();
+setTimeout(() => {
+  console.log("🚀 ~ user:", user);
+}, 4000);

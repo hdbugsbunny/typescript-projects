@@ -1,4 +1,5 @@
 interface USERPROPS {
+  id?: number;
   name?: string;
   age?: number;
 }
@@ -10,7 +11,7 @@ export class User {
 
   constructor(private data: USERPROPS) {}
 
-  get(propName: string): string | number {
+  get(propName: string): string | number | undefined {
     return this.data[propName];
   }
 
@@ -32,5 +33,18 @@ export class User {
     }
 
     this.events[eventName].forEach((callback) => callback());
+  }
+
+  fetchData(): void {
+    fetch(`http://localhost:3000/users/${this.get("id")}`)
+      .then((response: Response): Promise<USERPROPS> => {
+        if (!response.ok) {
+          throw new Error(`Failed to fetch data: ${response.statusText}`);
+        }
+
+        return response.json();
+      })
+      .then((data: USERPROPS): void => this.set(data))
+      .catch((error: Error): void => console.error("Fetch error:", error));
   }
 }
