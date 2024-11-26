@@ -24,4 +24,12 @@ export class User {
     }
     this.events[eventName].push(callback);
   }
+
+  trigger(eventName: string): void {
+    if (!this.events[eventName] || !this.events[eventName].length) {
+      return;
+    }
+
+    this.events[eventName].forEach((callback) => callback());
+  }
 }
