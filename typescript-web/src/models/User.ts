@@ -22,6 +22,7 @@ export class User {
     if (!this.events[eventName]) {
       this.events[eventName] = [];
     }
+
     this.events[eventName].push(callback);
   }
 
