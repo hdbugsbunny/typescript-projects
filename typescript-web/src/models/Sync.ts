@@ -1,5 +1,5 @@
 interface HASID {
-  id: number;
+  id?: number;
 }
 
 export class Sync<T extends HASID> {
