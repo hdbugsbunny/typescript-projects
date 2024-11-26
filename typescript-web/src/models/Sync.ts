@@ -1,4 +1,8 @@
-export class Sync<T> {
+interface HASID {
+  id: number;
+}
+
+export class Sync<T extends HASID> {
   constructor(public rootUrl: string) {}
 
   async fetchData(id: number): Promise<T> {
