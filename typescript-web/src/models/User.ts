@@ -47,4 +47,34 @@ export class User {
       .then((data: USERPROPS): void => this.set(data))
       .catch((error: Error): void => console.error("Fetch error:", error));
   }
+
+  saveData(): void {
+    const id = this.get("id");
+    const url = id
+      ? `http://localhost:3000/users/${id}`
+      : "http://localhost:3000/users";
+    const method = id ? "PUT" : "POST";
+
+    fetch(url, {
+      method,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(this.data),
+    })
+      .then((response: Response): Promise<USERPROPS> => {
+        if (!response.ok) {
+          throw new Error(
+            `Failed to ${method === "PUT" ? "update" : "create"} user: ${
+              response.statusText
+            }`
+          );
+        }
+        return response.json();
+      })
+      .then((data: USERPROPS): void => this.set(data))
+      .catch((error: Error): void =>
+        console.error(`${method === "PUT" ? "Save" : "Create"} error:`, error)
+      );
+  }
 }
