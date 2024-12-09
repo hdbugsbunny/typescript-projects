@@ -30,4 +30,27 @@ export class User {
   get get() {
     return this.attributes.get;
   }
+
+  set(update: USERPROPS) {
+    this.attributes.set(update);
+  }
+
+  fetch(): void {
+    const id = this.attributes.get("id");
+    if (typeof id !== "number") {
+      throw new Error("User must have an ID to fetch data");
+    }
+
+    this.syncs.fetchData(id).then((data) => {
+      this.set(data);
+      this.trigger("fetch");
+    });
+  }
+
+  save(): void {
+    this.syncs.saveData(this.attributes.getAll()).then((data) => {
+      this.set(data);
+      this.trigger("save");
+    });
+  }
 }
