@@ -2,7 +2,7 @@ interface HASID {
   id?: number;
 }
 
-export class Sync<T extends HASID> {
+export class ApiSync<T extends HASID> {
   constructor(public rootUrl: string) {}
 
   async fetchData(id: number): Promise<T> {

@@ -1,6 +1,7 @@
+import { ApiSync } from "./ApiSync";
 import { Attributes } from "./Attributes";
 import { Eventing } from "./Eventing";
-import { Sync } from "./Sync";
+import { Model } from "./Model";
 
 interface USERPROPS {
   id?: number;
@@ -10,47 +11,12 @@ interface USERPROPS {
 
 const ROOT_URL = "http://localhost:3000/users";
 
-export class User {
-  public events: Eventing = new Eventing();
-  public syncs: Sync<USERPROPS> = new Sync<USERPROPS>(ROOT_URL);
-  public attributes: Attributes<USERPROPS>;
-
-  constructor(attrs: USERPROPS) {
-    this.attributes = new Attributes<USERPROPS>(attrs);
-  }
-
-  get on() {
-    return this.events.on;
-  }
-
-  get trigger() {
-    return this.events.trigger;
-  }
-
-  get get() {
-    return this.attributes.get;
-  }
-
-  set(update: USERPROPS) {
-    this.attributes.set(update);
-  }
-
-  fetch(): void {
-    const id = this.attributes.get("id");
-    if (typeof id !== "number") {
-      throw new Error("User must have an ID to fetch data");
-    }
-
-    this.syncs.fetchData(id).then((data) => {
-      this.set(data);
-      this.trigger("fetch");
-    });
-  }
-
-  save(): void {
-    this.syncs.saveData(this.attributes.getAll()).then((data) => {
-      this.set(data);
-      this.trigger("save");
-    });
+export class User extends Model<USERPROPS> {
+  static buildUser(attrs: USERPROPS): User {
+    return new User(
+      new Attributes<USERPROPS>(attrs),
+      new Eventing(),
+      new ApiSync<USERPROPS>(ROOT_URL)
+    );
   }
 }
