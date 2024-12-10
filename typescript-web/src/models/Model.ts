@@ -14,7 +14,7 @@ interface MODEL_EVENTS {
   trigger(eventName: string): void;
 }
 
-interface HASID {
+export interface HASID {
   id?: number;
 }
 
@@ -44,7 +44,7 @@ export class Model<T extends HASID> {
   fetch(): void {
     const id = this.attributes.get("id");
     if (typeof id !== "number") {
-      throw new Error("User must have an ID to fetch data");
+      throw new Error("Must have an ID to fetch data");
     }
 
     this.syncs.fetchData(id).then((data) => {

@@ -4,7 +4,7 @@ import { Collection } from "./Collection";
 import { Eventing } from "./Eventing";
 import { Model } from "./Model";
 
-interface USERPROPS {
+export interface USERPROPS {
   id?: number;
   name?: string;
   age?: number;
