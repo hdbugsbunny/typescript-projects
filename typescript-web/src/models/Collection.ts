@@ -1,11 +1,10 @@
 import { Eventing } from "./Eventing";
-import { User } from "./User";
 
-export class Collection {
-  models: User[] = [];
+export class Collection<T, K> {
+  models: T[] = [];
   events: Eventing = new Eventing();
 
-  constructor(public rootUrl: string) {}
+  constructor(public rootUrl: string, public deserialize: (json: K) => T) {}
 
   get on() {
     return this.events.on;
@@ -15,16 +14,14 @@ export class Collection {
     return this.events.trigger;
   }
 
-  async fetchAllUsers(): Promise<void> {
+  async fetchAll(): Promise<void> {
     const response: Response = await fetch(`${this.rootUrl}`);
     if (!response.ok) {
-      throw new Error(`Failed to fetch data: ${response.statusText}`);
+      throw new Error(`Failed to fetch all data: ${response.statusText}`);
     }
-    const data = await response.json();
-    data.forEach((value: { id?: number; name?: string; age?: number }) => {
-      const user = User.buildUser(value);
-      this.models.push(user);
-    });
+
+    const data: [] = await response.json();
+    data.forEach((value: K) => this.models.push(this.deserialize(value)));
 
     this.trigger("fetched");
   }
