@@ -1,22 +1,53 @@
 export class UserForm {
   constructor(public parent: Element) {}
 
+  eventsMap(): { [key: string]: () => void } {
+    return {
+      "click:button": this.onButtonClick,
+      "mouseenter:h1": this.onHoverHeading,
+    };
+  }
+
+  onButtonClick(): void {
+    const nameInput = document.getElementById("name") as HTMLInputElement;
+    const ageInput = document.getElementById("age") as HTMLInputElement;
+
+    console.log(`Name: ${nameInput.value}, Age: ${ageInput.value}`);
+  }
+
+  onHoverHeading(): void {
+    console.log(`Hover Heading`);
+  }
+
   template(): string {
     return `
       <div>
         <h1>User Form</h1>
-        <form>
-            <input type="text" id="name" placeholder="Name" required>
-            <input type="number" id="age" placeholder="Age" required>
-            <button type="submit">Submit</button>
-        </form>
+        <input type="text" id="name" placeholder="Name" required>
+        <input type="number" id="age" placeholder="Age" required>
+        <button>Submit</button>
       </div>
     `;
+  }
+
+  bindEvents(fragment: DocumentFragment): void {
+    const fragmentEvents = this.eventsMap();
+
+    for (const event in fragmentEvents) {
+      const [eventType, selector] = event.split(":");
+      const callback = fragmentEvents[event];
+
+      fragment.querySelectorAll(selector).forEach((element: Element) => {
+        element.addEventListener(eventType, callback);
+      });
+    }
   }
 
   render(): void {
     const templateElement = document.createElement("template");
     templateElement.innerHTML = this.template();
+
+    this.bindEvents(templateElement.content);
 
     this.parent.append(templateElement.content);
   }
