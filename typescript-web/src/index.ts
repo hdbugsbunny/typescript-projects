@@ -1,5 +1,5 @@
 import { User } from "./models/User";
-import { UserForm } from "./views/UserForm";
+import { UserEdit } from "./views/UserEdit";
 
 const root = document.getElementById("root");
 if (!root) {
@@ -7,6 +7,6 @@ if (!root) {
 }
 
 const user = User.buildUser({ name: "Harshit", age: 27 });
-const userForm = new UserForm(root, user);
+const userEdit = new UserEdit(root, user);
 
-userForm.render();
+userEdit.render();
