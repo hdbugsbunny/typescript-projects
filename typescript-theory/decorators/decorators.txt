@@ -1,0 +1,12 @@
+Definition :- Functions that can be used to modify/change/anything different properties/methods in the class.
+
+Points :-
+1. Not the same as JavaScript decorators
+2. Used inside/on classes only
+3. Understanding the order in which decorators are ran are the key to understanding them
+
+Decorators on a property, method, and accessor :-
+1. First argument is the "prototype" of the object
+2. Second argument is the key of the property/method/accessor on the object
+3. Third argument is the property descriptor
+4. Decorators are applied when the code for this class is ran (not when an instance is created)
