@@ -5,13 +5,22 @@ class Boat {
     return `The boat is ${this.color}.`;
   }
 
-  @testDecorator
+  @logError
   pilot(): void {
+    throw new Error("The Boat Sunk!");
     console.log("The boat is piloting...");
   }
 }
 
-function testDecorator(target: any, key: string): void {
-  console.log("Target: ", target);
-  console.log("Key: ", key);
+function logError(target: any, key: string, desc: PropertyDescriptor): void {
+  const originalMethod = desc.value;
+  desc.value = function (...args: any[]): void {
+    try {
+      originalMethod.apply(this, args);
+    } catch (error) {
+      console.error(`Error occurred in method "${key}":`, error);
+    }
+  };
 }
+
+new Boat().pilot();

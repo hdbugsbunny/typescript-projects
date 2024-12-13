@@ -10,3 +10,9 @@ Decorators on a property, method, and accessor :-
 2. Second argument is the key of the property/method/accessor on the object
 3. Third argument is the property descriptor
 4. Decorators are applied when the code for this class is ran (not when an instance is created)
+
+Property Descriptor for Methods :-
+1. writable(boolean) -> Whether or not this property can be changed
+2. enumerable(boolean) -> Whether or not this property get looped over by a "for...in"
+3. value -> The current value of the property
+4. configurable(boolean) -> Property definition can be changed and property can be deleted
