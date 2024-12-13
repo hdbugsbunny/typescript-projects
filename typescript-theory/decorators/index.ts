@@ -5,21 +5,23 @@ class Boat {
     return `The boat is ${this.color}.`;
   }
 
-  @logError
+  @logError("The Boat Sunk in Ocean!")
   pilot(): void {
-    throw new Error("The Boat Sunk!");
+    throw new Error();
     console.log("The boat is piloting...");
   }
 }
 
-function logError(target: any, key: string, desc: PropertyDescriptor): void {
-  const originalMethod = desc.value;
-  desc.value = function (...args: any[]): void {
-    try {
-      originalMethod.apply(this, args);
-    } catch (error) {
-      console.error(`Error occurred in method "${key}":`, error);
-    }
+function logError(errMessage: string): Function {
+  return function (target: any, key: string, desc: PropertyDescriptor): void {
+    const originalMethod = desc.value;
+    desc.value = function (...args: any[]): void {
+      try {
+        originalMethod.apply(this, args);
+      } catch (_) {
+        console.error(`Error occurred in method "${key}":`, errMessage);
+      }
+    };
   };
 }
 
