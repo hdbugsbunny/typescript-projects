@@ -1,13 +1,19 @@
-import { Request, Response } from "express";
-import { controller, get } from "./decorators";
+import { NextFunction, Request, Response } from "express";
+import { controller, get, use } from "./decorators";
 
 interface RequestBody extends Request {
   body: { [key: string]: string | undefined };
 }
 
+function logger(req: RequestBody, res: Response, next: NextFunction) {
+  console.log(`Request: ${req.method} ${req.url}`);
+  next();
+}
+
 @controller("/auth")
 export class LoginController {
   @get("/login")
+  @use(logger)
   getLogin(_: RequestBody, res: Response): void {
     res.send(`
     <form method="POST">

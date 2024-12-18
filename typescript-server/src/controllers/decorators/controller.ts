@@ -18,8 +18,12 @@ export function controller(routePrefix: string) {
         target.prototype,
         key
       );
-      if (method && path) {
-        router[method](`${routePrefix}${path}`, routeHandler);
+      const middlewares =
+        Reflect.getMetadata(MetadataKeys.middleware, target.prototype, key) ||
+        [];
+
+      if (method && path && middlewares.length > 0) {
+        router[method](`${routePrefix}${path}`, ...middlewares, routeHandler);
       }
     }
   };
