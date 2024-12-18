@@ -1,17 +1,17 @@
 import { RequestHandler } from "express";
-import "reflect-metadata";
-import { MetadataKeys } from "./MetadataKeys";
+import { MetadataKeys } from "../../utils/enums";
+import { getMeta, setMeta } from "../../utils/reflectMetadata";
 
 export function use(middleware: RequestHandler) {
-  return function (target: any, key: string, desc: PropertyDescriptor) {
+  return function (target: any, key: string, _: PropertyDescriptor) {
     const middlewares =
-      Reflect.getMetadata(MetadataKeys.middleware, target, key) || [];
+      getMeta({ metadataKey: MetadataKeys.middleware, target, key }) || [];
 
-    Reflect.defineMetadata(
-      MetadataKeys.middleware,
-      [...middlewares, middleware],
+    setMeta({
+      metadataKey: MetadataKeys.middleware,
+      metadataValue: [...middlewares, middleware],
       target,
-      key
-    );
+      key,
+    });
   };
 }

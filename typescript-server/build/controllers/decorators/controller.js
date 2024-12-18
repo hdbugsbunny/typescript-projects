@@ -10,33 +10,36 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.controller = controller;
-require("reflect-metadata");
 var AppRouter_1 = require("../../AppRouter");
-var MetadataKeys_1 = require("./MetadataKeys");
-function bodyValidators(keys) {
-    return function (req, res, next) {
-        for (var _i = 0, keys_1 = keys; _i < keys_1.length; _i++) {
-            var key = keys_1[_i];
-            if (!req.body[key]) {
-                res.status(422).send("Missing required field: ".concat(key));
-                return;
-            }
-        }
-        next();
-    };
-}
+var enums_1 = require("../../utils/enums");
+var helperFunc_1 = require("../../utils/helperFunc");
+var reflectMetadata_1 = require("../../utils/reflectMetadata");
 function controller(routePrefix) {
     return function (target) {
         var router = AppRouter_1.AppRouter.getInstance();
         for (var key in target.prototype) {
             var routeHandler = target.prototype[key];
-            var method = Reflect.getMetadata(MetadataKeys_1.MetadataKeys.method, target.prototype, key);
-            var path = Reflect.getMetadata(MetadataKeys_1.MetadataKeys.path, target.prototype, key);
-            var middlewares = Reflect.getMetadata(MetadataKeys_1.MetadataKeys.middleware, target.prototype, key) ||
-                [];
-            var reqBodyProps = Reflect.getMetadata(MetadataKeys_1.MetadataKeys.validator, target.prototype, key) ||
-                [];
-            var validators = bodyValidators(reqBodyProps);
+            var method = (0, reflectMetadata_1.getMeta)({
+                metadataKey: enums_1.MetadataKeys.method,
+                target: target.prototype,
+                key: key,
+            });
+            var path = (0, reflectMetadata_1.getMeta)({
+                metadataKey: enums_1.MetadataKeys.path,
+                target: target.prototype,
+                key: key,
+            });
+            var middlewares = (0, reflectMetadata_1.getMeta)({
+                metadataKey: enums_1.MetadataKeys.middleware,
+                target: target.prototype,
+                key: key,
+            }) || [];
+            var reqBodyProps = (0, reflectMetadata_1.getMeta)({
+                metadataKey: enums_1.MetadataKeys.validator,
+                target: target.prototype,
+                key: key,
+            }) || [];
+            var validators = (0, helperFunc_1.bodyValidators)(reqBodyProps);
             if (method && path) {
                 router[method].apply(router, __spreadArray(__spreadArray(["".concat(routePrefix).concat(path)], middlewares, false), [validators,
                     routeHandler], false));

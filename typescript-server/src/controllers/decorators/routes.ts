@@ -1,15 +1,5 @@
-import "reflect-metadata";
-import { MetadataKeys } from "./MetadataKeys";
-import { Methods } from "./Methods";
-
-function routeBinder(method: string) {
-  return function (path: string) {
-    return function (target: any, key: string, desc: PropertyDescriptor) {
-      Reflect.defineMetadata(MetadataKeys.method, method, target, key);
-      Reflect.defineMetadata(MetadataKeys.path, path, target, key);
-    };
-  };
-}
+import { Methods } from "../../utils/enums";
+import { routeBinder } from "../../utils/helperFunc";
 
 export const get = routeBinder(Methods.get);
 export const post = routeBinder(Methods.post);

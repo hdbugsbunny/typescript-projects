@@ -1,20 +1,13 @@
-import { NextFunction, Request, Response } from "express";
+import { Response } from "express";
+import { logger, requireAuth } from "../utils/helperFunc";
+import { RequestBody } from "../utils/interfaces";
 import { controller, get, use } from "./decorators";
-
-function requireAuth(req: Request, res: Response, next: NextFunction): void {
-  if (req.session?.loggedIn) {
-    next();
-  } else {
-    res
-      .status(403)
-      .send(`<div>You Must be Logged in to Access This Page!</div>`);
-  }
-}
 
 @controller("")
 export class RootController {
   @get("/")
-  getRoot(req: Request, res: Response) {
+  @use(logger)
+  getRoot(req: RequestBody, res: Response) {
     if (req.session?.loggedIn) {
       res.send(`
         <div>
@@ -34,8 +27,9 @@ export class RootController {
   }
 
   @get("/protected")
+  @use(logger)
   @use(requireAuth)
-  getProtected(_: Request, res: Response) {
+  getProtected(_: RequestBody, res: Response) {
     res.send("You are Accessing a Protected Resource!");
   }
 }

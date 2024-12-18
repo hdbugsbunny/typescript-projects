@@ -10,11 +10,16 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.use = use;
-require("reflect-metadata");
-var MetadataKeys_1 = require("./MetadataKeys");
+var enums_1 = require("../../utils/enums");
+var reflectMetadata_1 = require("../../utils/reflectMetadata");
 function use(middleware) {
-    return function (target, key, desc) {
-        var middlewares = Reflect.getMetadata(MetadataKeys_1.MetadataKeys.middleware, target, key) || [];
-        Reflect.defineMetadata(MetadataKeys_1.MetadataKeys.middleware, __spreadArray(__spreadArray([], middlewares, true), [middleware], false), target, key);
+    return function (target, key, _) {
+        var middlewares = (0, reflectMetadata_1.getMeta)({ metadataKey: enums_1.MetadataKeys.middleware, target: target, key: key }) || [];
+        (0, reflectMetadata_1.setMeta)({
+            metadataKey: enums_1.MetadataKeys.middleware,
+            metadataValue: __spreadArray(__spreadArray([], middlewares, true), [middleware], false),
+            target: target,
+            key: key,
+        });
     };
 }

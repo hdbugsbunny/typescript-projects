@@ -10,11 +10,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LoginController = void 0;
+var helperFunc_1 = require("../utils/helperFunc");
 var decorators_1 = require("./decorators");
-function logger(req, res, next) {
-    console.log("Request: ".concat(req.method, " ").concat(req.url));
-    next();
-}
 var LoginController = /** @class */ (function () {
     function LoginController() {
     }
@@ -39,14 +36,14 @@ var LoginController = /** @class */ (function () {
     };
     __decorate([
         (0, decorators_1.get)("/login"),
-        (0, decorators_1.use)(logger),
+        (0, decorators_1.use)(helperFunc_1.logger),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", [Object, Object]),
         __metadata("design:returntype", void 0)
     ], LoginController.prototype, "getLogin", null);
     __decorate([
         (0, decorators_1.post)("/login"),
-        (0, decorators_1.use)(logger),
+        (0, decorators_1.use)(helperFunc_1.logger),
         (0, decorators_1.bodyValidator)("email", "password"),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", [Object, Object]),
@@ -54,7 +51,7 @@ var LoginController = /** @class */ (function () {
     ], LoginController.prototype, "postLogin", null);
     __decorate([
         (0, decorators_1.get)("/logout"),
-        (0, decorators_1.use)(logger),
+        (0, decorators_1.use)(helperFunc_1.logger),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", [Object, Object]),
         __metadata("design:returntype", void 0)

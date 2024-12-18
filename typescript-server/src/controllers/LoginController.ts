@@ -1,14 +1,7 @@
-import { NextFunction, Request, Response } from "express";
+import { Response } from "express";
+import { logger } from "../utils/helperFunc";
+import { RequestBody } from "../utils/interfaces";
 import { bodyValidator, controller, get, post, use } from "./decorators";
-
-interface RequestBody extends Request {
-  body: { [key: string]: string | undefined };
-}
-
-function logger(req: RequestBody, res: Response, next: NextFunction) {
-  console.log(`Request: ${req.method} ${req.url}`);
-  next();
-}
 
 @controller("/auth")
 export class LoginController {

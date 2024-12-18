@@ -1,8 +1,13 @@
-import "reflect-metadata";
-import { MetadataKeys } from "./MetadataKeys";
+import { MetadataKeys } from "../../utils/enums";
+import { setMeta } from "../../utils/reflectMetadata";
 
 export function bodyValidator(...keys: string[]) {
-  return function (target: any, key: string, desc: PropertyDescriptor) {
-    Reflect.defineMetadata(MetadataKeys.validator, keys, target, key);
+  return function (target: any, key: string, _: PropertyDescriptor) {
+    setMeta({
+      metadataKey: MetadataKeys.validator,
+      metadataValue: keys,
+      target,
+      key,
+    });
   };
 }

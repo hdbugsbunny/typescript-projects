@@ -10,18 +10,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RootController = void 0;
+var helperFunc_1 = require("../utils/helperFunc");
 var decorators_1 = require("./decorators");
-function requireAuth(req, res, next) {
-    var _a;
-    if ((_a = req.session) === null || _a === void 0 ? void 0 : _a.loggedIn) {
-        next();
-    }
-    else {
-        res
-            .status(403)
-            .send("<div>You Must be Logged in to Access This Page!</div>");
-    }
-}
 var RootController = /** @class */ (function () {
     function RootController() {
     }
@@ -39,13 +29,15 @@ var RootController = /** @class */ (function () {
     };
     __decorate([
         (0, decorators_1.get)("/"),
+        (0, decorators_1.use)(helperFunc_1.logger),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", [Object, Object]),
         __metadata("design:returntype", void 0)
     ], RootController.prototype, "getRoot", null);
     __decorate([
         (0, decorators_1.get)("/protected"),
-        (0, decorators_1.use)(requireAuth),
+        (0, decorators_1.use)(helperFunc_1.logger),
+        (0, decorators_1.use)(helperFunc_1.requireAuth),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", [Object, Object]),
         __metadata("design:returntype", void 0)
