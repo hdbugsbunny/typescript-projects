@@ -44,4 +44,11 @@ export class LoginController {
       res.status(401).send("Invalid Email or Password!");
     }
   }
+
+  @get("/logout")
+  @use(logger)
+  getLogout(req: RequestBody, res: Response) {
+    req.session = null;
+    res.redirect("/");
+  }
 }
