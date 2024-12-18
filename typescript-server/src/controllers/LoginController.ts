@@ -1,10 +1,15 @@
 import { Request, Response } from "express";
+import { controller } from "./decorators/controller";
 import { get } from "./decorators/routes";
 
-@controller("/")
+interface RequestBody extends Request {
+  body: { [key: string]: string | undefined };
+}
+
+@controller("/auth")
 export class LoginController {
   @get("/login")
-  getLogin(_: Request, res: Response): void {
+  getLogin(_: RequestBody, res: Response): void {
     res.send(`
     <form method="POST">
       <div>
