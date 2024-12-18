@@ -1,0 +1,6 @@
+Definition :-
+1. Proposed feature to be added to JavaScript (and thus, TS)
+2. Snippets of info that can be tied to a method, property or class definition
+3. Can be used for super custom stuff
+4. Typescript will (optionally) provide type information as metadata
+5. Read and written using reflect-metadata package
