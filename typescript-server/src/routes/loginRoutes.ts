@@ -38,20 +38,6 @@ router.get("/", (req: RequestBody, res: Response) => {
   }
 });
 
-router.post("/login", (req: RequestBody, res: Response) => {
-  //! Add your login logic here
-  const { email, password } = req.body;
-  //! Validate email and password
-  if (!email || !password) {
-    res.status(400).send("Email and Password are Required!");
-  } else if (email === "test2@test.com" && password === "1234567890") {
-    req.session = { loggedIn: true };
-    res.redirect("/");
-  } else {
-    res.status(401).send("Invalid Email or Password!");
-  }
-});
-
 router.get("/protected", requireAuth, (_: RequestBody, res: Response) => {
   res.send("You are Accessing a Protected Resource!");
 });

@@ -13,6 +13,18 @@ exports.controller = controller;
 require("reflect-metadata");
 var AppRouter_1 = require("../../AppRouter");
 var MetadataKeys_1 = require("./MetadataKeys");
+function bodyValidators(keys) {
+    return function (req, res, next) {
+        for (var _i = 0, keys_1 = keys; _i < keys_1.length; _i++) {
+            var key = keys_1[_i];
+            if (!req.body[key]) {
+                res.status(422).send("Missing required field: ".concat(key));
+                return;
+            }
+        }
+        next();
+    };
+}
 function controller(routePrefix) {
     return function (target) {
         var router = AppRouter_1.AppRouter.getInstance();
@@ -22,8 +34,12 @@ function controller(routePrefix) {
             var path = Reflect.getMetadata(MetadataKeys_1.MetadataKeys.path, target.prototype, key);
             var middlewares = Reflect.getMetadata(MetadataKeys_1.MetadataKeys.middleware, target.prototype, key) ||
                 [];
-            if (method && path && middlewares.length > 0) {
-                router[method].apply(router, __spreadArray(__spreadArray(["".concat(routePrefix).concat(path)], middlewares, false), [routeHandler], false));
+            var reqBodyProps = Reflect.getMetadata(MetadataKeys_1.MetadataKeys.validator, target.prototype, key) ||
+                [];
+            var validators = bodyValidators(reqBodyProps);
+            if (method && path) {
+                router[method].apply(router, __spreadArray(__spreadArray(["".concat(routePrefix).concat(path)], middlewares, false), [validators,
+                    routeHandler], false));
             }
         }
     };

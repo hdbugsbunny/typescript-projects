@@ -24,21 +24,6 @@ router.get("/", function (req, res) {
         res.send("\n        <div>\n          <div>You are Logged Out!</div>\n          <a href=\"/login\">Login</a>\n        </div>\n      ");
     }
 });
-router.post("/login", function (req, res) {
-    //! Add your login logic here
-    var _a = req.body, email = _a.email, password = _a.password;
-    //! Validate email and password
-    if (!email || !password) {
-        res.status(400).send("Email and Password are Required!");
-    }
-    else if (email === "test2@test.com" && password === "1234567890") {
-        req.session = { loggedIn: true };
-        res.redirect("/");
-    }
-    else {
-        res.status(401).send("Invalid Email or Password!");
-    }
-});
 router.get("/protected", requireAuth, function (_, res) {
     res.send("You are Accessing a Protected Resource!");
 });

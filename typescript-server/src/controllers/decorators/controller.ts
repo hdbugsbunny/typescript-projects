@@ -1,7 +1,20 @@
+import { NextFunction, Request, RequestHandler, Response } from "express";
 import "reflect-metadata";
 import { AppRouter } from "../../AppRouter";
 import { MetadataKeys } from "./MetadataKeys";
 import { Methods } from "./Methods";
+
+function bodyValidators(keys: string): RequestHandler {
+  return function (req: Request, res: Response, next: NextFunction) {
+    for (const key of keys) {
+      if (!req.body[key]) {
+        res.status(422).send(`Missing required field: ${key}`);
+        return;
+      }
+    }
+    next();
+  };
+}
 
 export function controller(routePrefix: string) {
   return function (target: Function) {
@@ -21,9 +34,18 @@ export function controller(routePrefix: string) {
       const middlewares =
         Reflect.getMetadata(MetadataKeys.middleware, target.prototype, key) ||
         [];
+      const reqBodyProps =
+        Reflect.getMetadata(MetadataKeys.validator, target.prototype, key) ||
+        [];
+      const validators = bodyValidators(reqBodyProps);
 
-      if (method && path && middlewares.length > 0) {
-        router[method](`${routePrefix}${path}`, ...middlewares, routeHandler);
+      if (method && path) {
+        router[method](
+          `${routePrefix}${path}`,
+          ...middlewares,
+          validators,
+          routeHandler
+        );
       }
     }
   };
