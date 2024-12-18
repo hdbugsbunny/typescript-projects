@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.router = void 0;
-const express_1 = require("express");
+var express_1 = require("express");
 function requireAuth(req, res, next) {
     var _a;
     if ((_a = req.session) === null || _a === void 0 ? void 0 : _a.loggedIn) {
@@ -10,48 +10,23 @@ function requireAuth(req, res, next) {
     else {
         res
             .status(403)
-            .send(`<div>You Must be Logged in to Access This Page!</div>`);
+            .send("<div>You Must be Logged in to Access This Page!</div>");
     }
 }
-const router = (0, express_1.Router)();
+var router = (0, express_1.Router)();
 exports.router = router;
-router.get("/", (req, res) => {
+router.get("/", function (req, res) {
     var _a;
     if ((_a = req.session) === null || _a === void 0 ? void 0 : _a.loggedIn) {
-        res.send(`
-        <div>
-          <div>You are Logged In!</div>
-          <a href="/logout">Logout</a>
-        </div>
-      `);
+        res.send("\n        <div>\n          <div>You are Logged In!</div>\n          <a href=\"/logout\">Logout</a>\n        </div>\n      ");
     }
     else {
-        res.send(`
-        <div>
-          <div>You are Logged Out!</div>
-          <a href="/login">Login</a>
-        </div>
-      `);
+        res.send("\n        <div>\n          <div>You are Logged Out!</div>\n          <a href=\"/login\">Login</a>\n        </div>\n      ");
     }
 });
-router.get("/login", (_, res) => {
-    res.send(`
-    <form method="POST">
-      <div>
-        <label for="email">User Email:</label>
-        <input type="email" id="email" name="email">
-      </div>
-      <div>
-        <label for="password">User Password:</label>
-        <input type="password" id="password" name="password">
-      </div>
-      <button>Login</button>
-    </form>
-  `);
-});
-router.post("/login", (req, res) => {
+router.post("/login", function (req, res) {
     //! Add your login logic here
-    const { email, password } = req.body;
+    var _a = req.body, email = _a.email, password = _a.password;
     //! Validate email and password
     if (!email || !password) {
         res.status(400).send("Email and Password are Required!");
@@ -64,10 +39,10 @@ router.post("/login", (req, res) => {
         res.status(401).send("Invalid Email or Password!");
     }
 });
-router.get("/protected", requireAuth, (_, res) => {
+router.get("/protected", requireAuth, function (_, res) {
     res.send("You are Accessing a Protected Resource!");
 });
-router.get("/logout", (req, res) => {
+router.get("/logout", function (req, res) {
     req.session = null;
     res.redirect("/");
 });

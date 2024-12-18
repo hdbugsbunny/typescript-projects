@@ -38,22 +38,6 @@ router.get("/", (req: RequestBody, res: Response) => {
   }
 });
 
-router.get("/login", (_: RequestBody, res: Response) => {
-  res.send(`
-    <form method="POST">
-      <div>
-        <label for="email">User Email:</label>
-        <input type="email" id="email" name="email">
-      </div>
-      <div>
-        <label for="password">User Password:</label>
-        <input type="password" id="password" name="password">
-      </div>
-      <button>Login</button>
-    </form>
-  `);
-});
-
 router.post("/login", (req: RequestBody, res: Response) => {
   //! Add your login logic here
   const { email, password } = req.body;
