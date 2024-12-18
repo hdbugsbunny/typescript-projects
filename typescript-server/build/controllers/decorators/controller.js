@@ -9,8 +9,9 @@ function controller(routePrefix) {
         for (var key in target.prototype) {
             var routeHandler = target.prototype[key];
             var path = Reflect.getMetadata("path", target.prototype, key);
-            if (path) {
-                router.get("".concat(routePrefix).concat(path), routeHandler);
+            var method = Reflect.getMetadata("method", target.prototype, key);
+            if (path && method) {
+                router[method]("".concat(routePrefix).concat(path), routeHandler);
             }
         }
     };
