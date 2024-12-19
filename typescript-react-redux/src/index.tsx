@@ -1,35 +1,18 @@
-import React, { Component, StrictMode } from "react";
+import React, { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
+import { Provider } from "react-redux";
+import { applyMiddleware, createStore } from "redux";
+import { thunk } from "redux-thunk";
+import App from "./components/App";
+import { reducers } from "./reducers";
 
-interface AppProps {
-  color?: string;
-}
-
-class App extends Component<AppProps> {
-  state = { counter: 0 };
-
-  onIncrement = (): void => {
-    this.setState({ counter: this.state.counter + 1 });
-  };
-
-  onDecrement = (): void => {
-    this.setState({ counter: this.state.counter - 1 });
-  };
-
-  render() {
-    return (
-      <div>
-        <button onClick={this.onIncrement}>Increment</button>
-        <button onClick={this.onDecrement}>Decrement</button>
-        {this.state.counter}
-      </div>
-    );
-  }
-}
+const store = createStore(reducers, applyMiddleware(thunk));
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
   <StrictMode>
-    <App color="red" />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </StrictMode>
 );
