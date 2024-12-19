@@ -1,15 +1,19 @@
 import React, { Component, StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 
-class App extends Component {
+interface AppProps {
+  color?: string;
+}
+
+class App extends Component<AppProps> {
   render() {
-    return <div>Hello World</div>;
+    return <div>{this.props.color}</div>;
   }
 }
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
   <StrictMode>
-    <App />
+    <App color="red" />
   </StrictMode>
 );
