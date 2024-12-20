@@ -18,8 +18,27 @@ interface AppProps {
 }
 
 class _App extends Component<AppProps> {
+  onButtonClick = (): void => {
+    this.props.fetchTodos();
+  };
+
+  renderList = (): JSX.Element => {
+    return (
+      <ul>
+        {this.props.todos.map((todo: Todo) => (
+          <li key={todo.id}>{todo.title}</li>
+        ))}
+      </ul>
+    );
+  };
+
   render() {
-    return <div>Hi There!</div>;
+    return (
+      <div>
+        <button onClick={this.onButtonClick}>Fetch Todos!</button>
+        {this.renderList()}
+      </div>
+    );
   }
 }
 
