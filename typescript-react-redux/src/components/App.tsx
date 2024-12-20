@@ -1,16 +1,7 @@
 import { Component } from "react";
 import { connect } from "react-redux";
 import { deleteTodo, fetchTodos } from "../actions";
-
-interface Todo {
-  id: number;
-  title: string;
-  completed: boolean;
-}
-
-interface StoreState {
-  todos: Todo[];
-}
+import { StoreState, Todo } from "../utils";
 
 interface AppProps {
   todos: Todo[];
@@ -59,7 +50,9 @@ class _App extends Component<AppProps, AppState> {
   render() {
     return (
       <div>
-        <button onClick={this.onButtonClick}>Fetch Todos!</button>
+        <button onClick={this.onButtonClick} disabled={this.state.fetching}>
+          Fetch Todos!
+        </button>
         {this.state.fetching && <p>Loading...</p>}
         {this.renderList()}
       </div>

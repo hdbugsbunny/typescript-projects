@@ -1,10 +1,4 @@
-import { Action, ActionTypes } from "../actions";
-
-interface Todo {
-  id: number;
-  title: string;
-  completed: boolean;
-}
+import { Action, ActionTypes, Todo } from "../utils";
 
 export const todosReducer = (state: Todo[] = [], action: Action) => {
   switch (action.type) {
