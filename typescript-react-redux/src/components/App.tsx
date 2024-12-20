@@ -1,11 +1,30 @@
-import React, { Component } from "react";
+import { Component } from "react";
+import { connect } from "react-redux";
+import { fetchTodos } from "../actions";
 
-// export default function App(): JSX.Element {
-//   return <div>App</div>;
-// }
+interface Todo {
+  id: number;
+  title: string;
+  completed: boolean;
+}
 
-export default class App extends Component {
+interface StoreState {
+  todos: Todo[];
+}
+
+interface AppProps {
+  todos: Todo[];
+  fetchTodos(): any;
+}
+
+class _App extends Component<AppProps> {
   render() {
     return <div>Hi There!</div>;
   }
 }
+
+const mapStateToProps = ({ todos }: StoreState): { todos: Todo[] } => {
+  return { todos };
+};
+
+export const App = connect(mapStateToProps, { fetchTodos })(_App);
