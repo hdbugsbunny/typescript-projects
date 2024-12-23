@@ -4,8 +4,12 @@ const Parent = () => {
   return (
     <div>
       Parent Component!
-      {<Child color="red" />}
-      {<Child1 color="blue" />}
+      <Child color="red" onClick={() => console.log("Child!")}>
+        Child
+      </Child>
+      <Child1 color="blue" onClick={() => console.log("Child1!")}>
+        Child1
+      </Child1>
     </div>
   );
 };
