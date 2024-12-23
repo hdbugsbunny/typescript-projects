@@ -1,10 +1,11 @@
-import { Child } from "./Child";
+import { Child, Child1 } from "./Child";
 
 const Parent = () => {
   return (
     <div>
-      Parent Component
+      Parent Component!
       {<Child color="red" />}
+      {<Child1 color="blue" />}
     </div>
   );
 };
